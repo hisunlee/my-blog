@@ -4,10 +4,11 @@ description: "무라카미 하루키의 「풀사이드」를 빌려, 쇼츠의 
 pubDate: 2026-07-21
 tags: ["에세이", "음악", "책", "무라카미 하루키"]
 heroImage: "https://images.unsplash.com/photo-1495554495850-3da3655dc16e?fm=jpg&q=80&w=1600&auto=format&fit=crop"
-layout: ../../layouts/BlogPost.astro
 ---
 
-{/* 첫 번째 이미지 — 풀사이즈 유지 */}
+{/* layout: 키를 frontmatter 에 절대 넣지 말 것.
+    [...slug].astro 가 이미 BlogPost 로 감싸므로, 여기 layout 이 있으면 이중 렌더링된다. */}
+
 <figure class="hero-image">
   <img src="https://images.unsplash.com/photo-1495554495850-3da3655dc16e?fm=jpg&q=80&w=1600&auto=format&fit=crop" alt="수영장 레인의 항공 사진" />
   <figcaption>Photo by CHUTTERSNAP on Unsplash</figcaption>
@@ -19,7 +20,6 @@ layout: ../../layouts/BlogPost.astro
 
 내가 여기서 다루려는 모든 글과 텍스트는 시간의 연속성 — 그것이 같은 시대를 함께 통과하는 순간이든, 서로 다른 시간대를 각자 통과하는 순간이든 — 그 위에서 쌓인 경험, 그리고 경험에서 비롯된 감정과 교감을 바탕으로 한 콘텐츠들이다.
 
-{/* 2번째 이후 이미지 — 한 행에 2~3장 그리드 배치 */}
 <div class="photo-grid">
   <figure>
     <img src="https://images.unsplash.com/photo-1766353862468-42ba2cf4fe3e?fm=jpg&q=80&w=800&auto=format&fit=crop" alt="빈티지 턴테이블에서 돌아가는 LP" />
