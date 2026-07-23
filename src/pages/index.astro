@@ -2,7 +2,7 @@
 // src/pages/blog/[...slug].astro  ← 기존 파일 전체를 이 내용으로 덮어쓰기
 // 중복 렌더링 방지: 여기서 BlogPost 를 한 번만 감싼다.
 import { getCollection } from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro";
+import BlogPost from "../layouts/BlogPost.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
