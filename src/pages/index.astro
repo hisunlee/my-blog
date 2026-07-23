@@ -1,21 +1,24 @@
 ---
-// src/pages/blog/[...slug].astro  ← 기존 파일 전체를 이 내용으로 덮어쓰기
-// 중복 렌더링 방지: 여기서 BlogPost 를 한 번만 감싼다.
-import { getCollection } from "astro:content";
+// src/pages/index.astro  ← 블로그 홈 (글 목록)
 import BlogPost from "../layouts/BlogPost.astro";
+import { getCollection } from "astro:content";
 
-export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
-}
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 
-const post = Astro.props;
-const { Content } = await post.render();
+const fmt = (d) =>
+  d instanceof Date ? d.toISOString().slice(0, 10) : String(d).slice(0, 10);
 ---
 
-<BlogPost {...post.data}>
-  <Content />
+<BlogPost title="Sun Lee" description="음악, 공연, 책, 영화에 대한 기록" pubDate={new Date()}>
+  <ul class="post-list">
+    {posts.map((post) => (
+      <li>
+        <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+        <p class="post-list__desc">{post.data.description}</p>
+        <time>{fmt(post.data.pubDate)}</time>
+      </li>
+    ))}
+  </ul>
 </BlogPost>
