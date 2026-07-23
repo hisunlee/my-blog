@@ -1,86 +1,171 @@
 ---
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+// src/layouts/BlogPost.astro
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getCollection } from "astro:content";
 
-type Props = CollectionEntry<'blog'>['data'];
+const { title, description, pubDate, tags = [] } = Astro.props;
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6);
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — Sun Lee</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <Header />
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+    <main class="wrap">
+      <!-- 왼쪽 2/3: 글과 사진 -->
+      <article class="content">
+        <h1>{title}</h1>
+        <p class="meta">
+          {pubDate instanceof Date ? pubDate.toISOString().slice(0, 10) : pubDate}
+          {tags.length > 0 && <span class="tags">· {tags.join(" · ")}</span>}
+        </p>
+        <slot />
+      </article>
+
+      <!-- 오른쪽 1/3: Recent posts -->
+      <aside class="sidebar">
+        <h2>Recent Posts</h2>
+        <ul>
+          {posts.map((p) => (
+            <li>
+              <a href={`/blog/${p.slug}/`}>{p.data.title}</a>
+              <time>{p.data.pubDate.toISOString().slice(0, 10)}</time>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </main>
+
+    <Footer />
+  </body>
 </html>
+
+<style is:global>
+  :root { --text: #1a1a1a; --muted: #777; }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    line-height: 1.75;
+    background: #fff;
+  }
+
+  /* ===== 2/3 + 1/3 그리드 ===== */
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .wrap { grid-template-columns: 1fr; }
+  }
+
+  .content h1 {
+    font-family: Georgia, serif;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+  }
+  .content .meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+  }
+  .content p { margin: 1.2rem 0; }
+  .content h2 { font-family: Georgia, serif; margin-top: 3rem; }
+
+  /* ===== 히어로(첫 번째) 이미지: 풀사이즈 ===== */
+  .hero-image img {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+  }
+
+  /* ===== 2,3,4번째 이후 이미지: 한 행에 2~3장 그리드 ===== */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.9rem;
+    margin: 2rem 0;
+  }
+  .photo-grid figure { margin: 0; }
+  .photo-grid img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+  }
+  .photo-grid figcaption,
+  .hero-image figcaption {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+
+  /* ===== YouTube 임베드: 면적 1/4 (가로 50%) ===== */
+  .video-embed {
+    position: relative;
+    width: 50%;
+    padding-bottom: 28.125%; /* 56.25% × 0.5 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 1.25rem 0;
+  }
+  .video-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  @media (max-width: 640px) {
+    .video-embed { width: 100%; padding-bottom: 56.25%; }
+  }
+
+  /* ===== 사이드바 ===== */
+  .sidebar {
+    position: sticky;
+    top: 90px;
+    border-left: 1px solid #eee;
+    padding-left: 1.75rem;
+  }
+  .sidebar h2 {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 1rem;
+  }
+  .sidebar ul { list-style: none; margin: 0; padding: 0; }
+  .sidebar li { margin-bottom: 1.1rem; }
+  .sidebar a {
+    display: block;
+    color: #111;
+    text-decoration: none;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+  .sidebar a:hover { text-decoration: underline; }
+  .sidebar time { font-size: 0.75rem; color: var(--muted); }
+  @media (max-width: 900px) {
+    .sidebar { border-left: 0; padding-left: 0; border-top: 1px solid #eee; padding-top: 2rem; position: static; }
+  }
+</style>
