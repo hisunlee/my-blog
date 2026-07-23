@@ -1,0 +1,60 @@
+---
+title: "오자와 세이지 씨와 음악을 이야기하다"
+description: "교향곡, 오페라, 실내악 — 세이지 씨와 하루키 씨를 통해 찾은 클래식의 묘미"
+pubDate: 2026-07-23
+tags: ["에세이", "음악", "책", "클래식", "무라카미 하루키", "오자와 세이지"]
+heroImage: "/images/books/ozawa-seiji-cover.jpg"
+---
+
+{/* layout: 키를 frontmatter 에 절대 넣지 말 것.
+    [...slug].astro 가 이미 BlogPost 로 감싸므로, 여기 layout 이 있으면 이중 렌더링된다. */}
+
+<figure class="hero-image">
+  <img src="/images/books/ozawa-seiji-cover.jpg" alt="『오자와 세이지 씨와 음악을 이야기하다』 표지" />
+  <figcaption>오자와 세이지 × 무라카미 하루키, 권영주 옮김 (비채)</figcaption>
+</figure>
+
+클래식에 대한 책은, 평생 읽지 않았을 것 같았고, 클래식 음악 또한 평생 찾아 듣지 않았을 것 같던 음악이다. 그런데 요즘 클래식의 묘미를 조금씩 알아가고 있다. 쇼츠로 채우던 휴식 시간, 일과 일 사이의 짧은 틈이 마음을 울리는 곡들로 바뀌어 가는 중이다. 그 무렵 읽은 오자와 세이지와 하루키의 대화는, 클래식을 아주 잘 아는 친구가 저 멀리 다른 차원에 있던 무언가를 내 앞의 커피숍이나 작은 스피커가 놓인 방으로 옮겨다 놓은 느낌이었다.
+
+음악과 오디오 애호가들이 흔히 거쳐 간다는 경로 — 팝에서 재즈로, 뮤지컬로, 클래식으로, 그리고 오페라로 — 를 나 역시 그대로 통과하고 있으니 신기하기만 하다.
+
+<div class="video-embed video-embed--small">
+  <iframe src="https://www.youtube.com/embed/-AoU-IHVf2c" title="오자와 세이지 지휘, 베를린 필하모닉" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+여섯 번의 대화로 구성된 이 책은 교향곡과 오페라, 그리고 지휘자와는 별 상관없어 보이는 실내악, 특히 현악 사중주까지 다룬다. 각 장에는 오자와 씨가 여러 나라와 여러 지휘자 사이에서 겪은 소소한 일화들이 섞여 있어 지루할 틈이 없었다.
+
+훌륭한 지휘자와 훌륭한 프로젝트 매니저는 닮은 점이 많다는 말을 나는 관용구처럼 해왔다. 그래서인지 지휘자마다 악단을 이끄는 방식, 그 방식이 만들어내는 공기를 언어로 풀어낸 대목이 특히 인상 깊었다. 훌륭한 팀은 저마다 다른 방식으로 훌륭한 음악에 도달한다. 물론 아직 나는 악단별 차이를 스스로 구별하지 못한다.
+
+이번 책에서 가장 마음에 남은 문장은 이것이다.
+
+> 현악기는 불행히도 숨을 안 쉬어도 된다, 그러니까 더더욱 호흡을 의식해서 연주해야 한다고. 불행히도란 표현이 재미있더군요. 그리고 또 침묵에 관해서도 여러 번 이야기하셨습니다. 침묵이란 건 단순히 소리가 없는 상태가 아니다, 거기에 침묵이란 소리가 분명히 존재한다고.
+
+이 책을 읽던 중 우연히 1미터 앞에서 현악 사중주를 들을 기회가 있었다. 첼로의 울림뿐 아니라 바이올린과 첼로 주자의 숨소리까지 들리는, 다시 오기 어려운 자리였다. 베토벤 현악 사중주 14번 Op. 131의 6악장 아다지오 콰지 운 포코 안단테와 7악장 알레그로. 제1바이올린의 호흡에 첼로와 비올라가 결을 맞추는 소리를 마이크도 스피커도 없이 듣는 동안, 현악기 주자의 호흡을 이야기하던 오자와 씨의 말이 문득 떠올랐다. 책의 문장과 베토벤의 음악과 실내악의 매력이 한꺼번에 몸 어딘가에 저장된 시간이었다.
+
+베토벤과 차이콥스키가 역사 속 인물이라면, 오자와 세이지는 최근까지 영상 자료가 남아 있는 사람이다. 손에 닿는 클래식이라는 점, 그것이 이 책의 가장 좋은 점이었다. 앞으로 조금씩 라이브를 찾아다니며 재즈와 더불어 음악 생활을 넓혀갈 수 있을 것 같다.
+
+---
+
+## 함께 들으면 좋은 음악
+
+<div class="video-grid">
+  <figure>
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/X25AasBxfj8" title="베토벤 현악 사중주 14번 Op. 131" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <figcaption>베토벤 현악 사중주 14번 Op. 131 (현악 합주 버전), 오자와 세이지 지휘</figcaption>
+  </figure>
+  <figure>
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/mhLpS5AYtSw" title="브람스 교향곡 1번" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <figcaption>브람스 교향곡 1번, 오자와 세이지 지휘 — 하루키가 이 책에서 언급한 곡</figcaption>
+  </figure>
+  <figure>
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/dxHHBoZTLVU?start=4980" title="The House Concert" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <figcaption>The House Concert</figcaption>
+  </figure>
+</div>
