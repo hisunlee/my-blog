@@ -1,52 +1,57 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
-import '../styles/global.css';
-import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/blog-placeholder-1.jpg';
-import { SITE_TITLE } from '../consts';
-import { Font } from 'astro:assets';
-
-interface Props {
-	title: string;
-	description: string;
-	image?: ImageMetadata;
-}
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
-const { title, description, image = FallbackImage } = Astro.props;
+// src/components/Header.astro
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/blog", label: "Blog" },
+  { href: "/about", label: "About" },
+];
 ---
 
-<!-- Global Metadata -->
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="icon" href="/favicon.ico" />
-<link rel="sitemap" href="/sitemap-index.xml" />
-<link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site)}
-/>
-<meta name="generator" content={Astro.generator} />
+<header class="site-header">
+  <div class="inner">
+    <a href="/" class="brand">Sun Lee</a>
+    <nav>
+      {nav.map((i) => <a href={i.href}>{i.label}</a>)}
+    </nav>
+    <!-- SNS 링크 / Contact me 제거됨 -->
+  </div>
+</header>
 
-<Font cssVariable="--font-atkinson" preload />
-
-<!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
-
-<!-- Primary Meta Tags -->
-<title>{title}</title>
-<meta name="description" content={description} />
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image.src, Astro.url)} />
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image" />
+<style>
+  .site-header {
+    border-bottom: 1px solid #e5e5e5;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #111;
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    gap: 1.75rem;
+  }
+  nav a {
+    color: #444;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  nav a:hover { color: #000; }
+  @media (max-width: 640px) {
+    .inner { flex-direction: column; gap: 0.75rem; }
+  }
+</style>
