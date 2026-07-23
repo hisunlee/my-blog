@@ -1,14 +1,20 @@
 ---
-// src/layouts/BlogPost.astro
+// src/layouts/BlogPost.astro  ← 기존 파일 전체를 이 내용으로 덮어쓰기
+// 주의: 이 레이아웃이 유일한 최상위 레이아웃이다.
+// BaseHead / Header / Footer 를 감싸는 다른 레이아웃을 추가로 import 하지 말 것.
+// 이것이 Recent Posts 가 두 번 나오던 원인이다.
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { getCollection } from "astro:content";
 
 const { title, description, pubDate, tags = [] } = Astro.props;
 
-const posts = (await getCollection("blog"))
+const recent = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 6);
+
+const fmt = (d) =>
+  d instanceof Date ? d.toISOString().slice(0, 10) : String(d).slice(0, 10);
 ---
 
 <html lang="ko">
@@ -22,24 +28,22 @@ const posts = (await getCollection("blog"))
     <Header />
 
     <main class="wrap">
-      <!-- 왼쪽 2/3: 글과 사진 -->
       <article class="content">
         <h1>{title}</h1>
         <p class="meta">
-          {pubDate instanceof Date ? pubDate.toISOString().slice(0, 10) : pubDate}
-          {tags.length > 0 && <span class="tags">· {tags.join(" · ")}</span>}
+          {fmt(pubDate)}
+          {tags.length > 0 && <span> · {tags.join(" · ")}</span>}
         </p>
         <slot />
       </article>
 
-      <!-- 오른쪽 1/3: Recent posts -->
       <aside class="sidebar">
         <h2>Recent Posts</h2>
         <ul>
-          {posts.map((p) => (
+          {recent.map((p) => (
             <li>
               <a href={`/blog/${p.slug}/`}>{p.data.title}</a>
-              <time>{p.data.pubDate.toISOString().slice(0, 10)}</time>
+              <time>{fmt(p.data.pubDate)}</time>
             </li>
           ))}
         </ul>
@@ -55,13 +59,11 @@ const posts = (await getCollection("blog"))
   body {
     margin: 0;
     color: var(--text);
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      sans-serif;
-    line-height: 1.75;
     background: #fff;
+    line-height: 1.75;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
-  /* ===== 2/3 + 1/3 그리드 ===== */
   .wrap {
     max-width: 1180px;
     margin: 0 auto;
@@ -71,42 +73,32 @@ const posts = (await getCollection("blog"))
     gap: 3rem;
     align-items: start;
   }
-  @media (max-width: 900px) {
-    .wrap { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
 
+  .content { min-width: 0; }
   .content h1 {
     font-family: Georgia, serif;
-    font-size: 2.2rem;
+    font-size: 2.1rem;
     line-height: 1.3;
     margin: 0 0 0.5rem;
   }
-  .content .meta {
-    color: var(--muted);
-    font-size: 0.85rem;
-    margin-bottom: 2rem;
-  }
-  .content p { margin: 1.2rem 0; }
+  .content .meta { color: var(--muted); font-size: 0.85rem; margin: 0 0 2rem; }
   .content h2 { font-family: Georgia, serif; margin-top: 3rem; }
+  .content img { max-width: 100%; }
 
-  /* ===== 히어로(첫 번째) 이미지: 풀사이즈 ===== */
-  .hero-image img {
-    width: 100%;
-    border-radius: 8px;
-    display: block;
-  }
+  .hero-image { margin: 0 0 2rem; }
+  .hero-image img { width: 100%; border-radius: 8px; display: block; }
 
-  /* ===== 2,3,4번째 이후 이미지: 한 행에 2~3장 그리드 ===== */
   .photo-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 0.9rem;
     margin: 2rem 0;
   }
   .photo-grid figure { margin: 0; }
   .photo-grid img {
     width: 100%;
-    height: 190px;
+    height: 185px;
     object-fit: cover;
     border-radius: 6px;
     display: block;
@@ -118,29 +110,24 @@ const posts = (await getCollection("blog"))
     margin-top: 0.35rem;
   }
 
-  /* ===== YouTube 임베드: 면적 1/4 (가로 50%) ===== */
+  /* YouTube: 면적 1/4 */
   .video-embed {
     position: relative;
     width: 50%;
-    padding-bottom: 28.125%; /* 56.25% × 0.5 */
+    padding-bottom: 28.125%;
     height: 0;
     overflow: hidden;
     border-radius: 8px;
     margin: 1.25rem 0;
   }
   .video-embed iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; border: 0;
   }
   @media (max-width: 640px) {
     .video-embed { width: 100%; padding-bottom: 56.25%; }
   }
 
-  /* ===== 사이드바 ===== */
   .sidebar {
     position: sticky;
     top: 90px;
@@ -149,7 +136,7 @@ const posts = (await getCollection("blog"))
   }
   .sidebar h2 {
     font-family: Georgia, serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin: 0 0 1rem;
@@ -166,6 +153,12 @@ const posts = (await getCollection("blog"))
   .sidebar a:hover { text-decoration: underline; }
   .sidebar time { font-size: 0.75rem; color: var(--muted); }
   @media (max-width: 900px) {
-    .sidebar { border-left: 0; padding-left: 0; border-top: 1px solid #eee; padding-top: 2rem; position: static; }
+    .sidebar {
+      position: static;
+      border-left: 0;
+      padding-left: 0;
+      border-top: 1px solid #eee;
+      padding-top: 2rem;
+    }
   }
 </style>
