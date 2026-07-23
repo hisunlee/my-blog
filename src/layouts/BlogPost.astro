@@ -42,7 +42,7 @@ const fmt = (d) =>
         <ul>
           {recent.map((p) => (
             <li>
-              <a href={`/blog/${p.slug}/`}>{p.data.title}</a>
+              <a href={`/blog/${p.id}/`}>{p.data.title}</a>
               <time>{fmt(p.data.pubDate)}</time>
             </li>
           ))}
