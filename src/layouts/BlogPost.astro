@@ -89,6 +89,14 @@ const fmt = (d) =>
   .hero-image { margin: 0 0 2rem; }
   .hero-image img { width: 100%; border-radius: 8px; display: block; }
 
+  /* 책 표지처럼 세로로 긴 이미지는 폭을 제한하고 가운데 정렬 */
+  .hero-image--cover img {
+    width: auto;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .hero-image--cover figcaption { text-align: center; }
+
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -126,6 +134,35 @@ const fmt = (d) =>
   }
   @media (max-width: 640px) {
     .video-embed { width: 100%; padding-bottom: 56.25%; }
+  }
+
+  /* 본문 흐름을 방해하지 않는 소형 임베드 */
+  .video-embed--small {
+    width: 35%;
+    padding-bottom: 19.6875%;
+  }
+  @media (max-width: 640px) {
+    .video-embed--small { width: 100%; padding-bottom: 56.25%; }
+  }
+
+  /* 영상 여러 개를 한 행에 가로로 배치 */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .video-grid figure { margin: 0; }
+  .video-grid .video-embed {
+    width: 100%;
+    padding-bottom: 56.25%;
+    margin: 0;
+  }
+  .video-grid figcaption {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    line-height: 1.45;
   }
 
   .sidebar {
